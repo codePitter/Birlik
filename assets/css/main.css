@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Template Name: Bootslander
 * Template URL: https://bootstrapmade.com/bootslander-free-bootstrap-landing-page-template/
 * Updated: Aug 07 2024 with Bootstrap v5.3.3
@@ -977,7 +977,7 @@ section,
 # About Section
 --------------------------------------------------------------*/
 .img-team {
-    /* tus estilos van ac� */
+    /* tus estilos van acá */
     max-width: 65%;
     height: auto;
     border-radius: 12px;
@@ -989,6 +989,65 @@ section,
 .about {
   padding-top: 100px;
 }
+.pdf-container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#pdf-render-wrapper {
+    position: relative;
+}
+
+#pdf-render {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+canvas {
+    width: 100%;
+    height: auto;
+}
+
+/* ✅ POSICIONA "Página 1" ARRIBA DEL CANVAS */
+#page-num {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    background: rgba(255,255,255,0.8);
+    padding: 4px 12px;
+    border-radius: 5px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Botones laterales */
+.pdf-controls-overlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    z-index: 10;
+}
+
+    .pdf-controls-overlay button {
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: rgba(255,255,255,0.8);
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
 .about .content h3 {
   font-size: 16px;
