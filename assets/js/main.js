@@ -183,3 +183,13 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+const pageContent = document.getElementById('page-content');
+const modal = document.getElementById('pdfModal');
+
+modal.addEventListener('show.bs.modal', () => {
+    pageContent.classList.add('blurred');
+});
+
+modal.addEventListener('hidden.bs.modal', () => {
+    pageContent.classList.remove('blurred');
+});
