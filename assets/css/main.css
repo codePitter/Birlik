@@ -18,23 +18,25 @@
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
-  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #040677; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #1acc8d; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+:root {
+    --background-color: #ffffff;
+    --default-color: #444444;
+    /* Verde suave corporativo */
+    --heading-color: #1f7a4d; /* Verde sobrio para títulos */
+    --accent-color: #3cb371; /* Verde medio (tipo "verde mediano") */
+    --contrast-color: #ffffff;
+    --surface-color: #f8f9fa; /* Fondo claro para tarjetas u otros elementos */
 }
+
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #ffffff;  /* The default color of the main navmenu links */
-  --nav-hover-color: #1acc8d; /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #444444; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #1acc8d; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+    --nav-color: #ffffff; /* The default color of the main navmenu links */
+    --nav-hover-color: #3cb371;
+    --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
+    --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+    --nav-dropdown-color: #444444; /* Used for navigation links of the dropdown items in the navigation menu. */
+    --nav-dropdown-hover-color: #3cb371;
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -45,11 +47,11 @@
 }
 
 .dark-background {
-  --background-color: #08005e;
-  --default-color: #ffffff;
-  --heading-color: #ffffff;
-  --surface-color: #0c0091;
-  --contrast-color: #ffffff;
+    --background-color: #66bb6a;
+    --default-color: #ffffff;
+    --heading-color: #ffffff;
+    --surface-color: #66bb6a;
+    --contrast-color: #ffffff;
 }
 
 /* Smooth scroll */
@@ -148,7 +150,7 @@ h6 {
   --heading-color: #ffffff;
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 20px 0;
+  padding: 10px 0;
   transition: all 0.5s;
   z-index: 997;
 }
@@ -158,7 +160,7 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 75px;
+  max-height: 65px;
   margin-right: 8px;
 }
 
@@ -176,7 +178,7 @@ h6 {
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
-  --background-color: #10058c;
+    --background-color: #66bb6a;
 }
 
 /*--------------------------------------------------------------
@@ -485,7 +487,7 @@ h6 {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
+  border: 1px solid black;
   font-size: 16px;
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   margin-right: 10px;
@@ -550,7 +552,7 @@ h6 {
   padding: 6px 8px;
   position: relative;
   border-radius: 4px;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  border: 1px solid grey;
   display: flex;
   background-color: var(--background-color);
   transition: 0.3s;
@@ -565,7 +567,7 @@ h6 {
   padding: 4px;
   width: 100%;
   background-color: var(--background-color);
-  color: var(--default-color);
+  color: black;
 }
 
 .footer .footer-newsletter .newsletter-form input[type=email]:focus-visible {
@@ -578,7 +580,7 @@ h6 {
   padding: 0 20px;
   margin: -7px -8px -7px 0;
   background: var(--accent-color);
-  color: var(--contrast-color);
+  color: black;
   transition: 0.3s;
   border-radius: 0 4px 4px 0;
 }
@@ -803,13 +805,13 @@ section,
   z-index: 1;
 }
 
-.hero:before {
-  content: "";
-  background: color-mix(in srgb, var(--background-color), transparent 10%);
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-}
+    .hero:before {
+        content: "";
+        position: absolute;
+        background: linear-gradient(to bottom, rgba(31, 122, 77, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+        inset: 0;
+        z-index: 2;
+    }
 
 .hero .container {
   position: relative;
@@ -821,7 +823,9 @@ section,
   font-size: 48px;
   font-weight: 700;
   line-height: 56px;
-  color: color-mix(in srgb, var(--heading-color), transparent 30%);
+  color: var(--heading-color);
+  opacity: 0.9; /* si querés una leve suavidad */
+
 }
 
 .hero h1 span {
@@ -853,7 +857,8 @@ section,
 .hero .btn-get-started:hover {
   color: var(--contrast-color);
   background: color-mix(in srgb, var(--accent-color), transparent 15%);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 28px rgba(60, 179, 113, 0.25); /* basado en #3cb371 */
+
 }
 
 .hero .btn-watch-video {
@@ -1474,6 +1479,7 @@ canvas {
   position: absolute;
   right: 15px;
   bottom: 15px;
+  color: black;
 }
 
 .team .member .social a {
