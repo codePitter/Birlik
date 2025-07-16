@@ -995,6 +995,8 @@ section,
   padding-top: 100px;
 }
 
+
+
 .menu-thumbnail-wrapper {
     display: flex;
     justify-content: center;
@@ -1003,15 +1005,14 @@ section,
 .menu-thumbnail {
     width: 320px;
     height: 450px;
-    background-image: url('assets/img/menu-page1.jpg'); /* tu imagen del PDF */
+    background-color: #eee;
     background-size: cover;
     background-position: center;
     border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     position: relative;
+    display: inline-block;
     cursor: pointer;
-    transition: all 0.3s ease;
-    overflow: hidden;
 }
 
     .menu-thumbnail::before {
@@ -1028,21 +1029,18 @@ section,
     }
 
     .menu-thumbnail:hover {
-        filter: blur(1.5px);
-        transform: scale(1.02);
+        filter: brightness(0.9);
     }
 
 .menu-overlay-text {
     position: absolute;
-    top: 50%;
+    bottom: 15px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 24px;
+    transform: translateX(-50%);
+    color: white;
     font-weight: bold;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 2;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
     pointer-events: none;
 }
 
