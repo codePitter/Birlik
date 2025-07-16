@@ -1021,10 +1021,10 @@ section,
 
 .menu-overlay-text {
     position: absolute;
-    bottom: 15px;
+    top: 50%;
     left: 50%;
     transform: translateX(-50%);
-    color: white;
+    color: floralwhite;
     font-weight: bold;
     font-size: 1.2rem;
     text-shadow: 0 0 5px rgba(0,0,0,0.7);
@@ -1106,6 +1106,27 @@ canvas {
     z-index: 5;
     pointer-events: none;
 }
+.btn-close-custom {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-close-custom:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
 
 .pdf-controls button {
     padding: 8px 18px;
