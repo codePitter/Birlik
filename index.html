@@ -174,35 +174,34 @@
                     </div>
 
                 </section>
+            </div>
+            <section id="gallery" class="gallery section">
 
-                <section id="gallery" class="gallery section">
-
-                    <div class="container section-title" data-aos="fade-up">
-                        <h2>Menú</h2>
-                        <div><span>Explora nuestro</span> <span class="description-title">Menú</span></div>
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Menú</h2>
+                    <div><span>Explora nuestro</span> <span class="description-title">Menú</span></div>
+                </div>
+                <div class="menu-thumbnail-wrapper text-center my-4">
+                    <div class="menu-thumbnail" id="pdf-thumbnail" data-bs-toggle="modal" data-bs-target="#pdfModal">
+                        <span class="menu-overlay-text">Ver menú</span>
                     </div>
-                    <div class="menu-thumbnail-wrapper text-center my-4">
-                        <div class="menu-thumbnail" id="pdf-thumbnail" data-bs-toggle="modal" data-bs-target="#pdfModal">
-                            <span class="menu-overlay-text">Ver menú</span>
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-body text-center">
-                                    <div id="pdf-render-modal"></div>
-                                    <div class="pdf-controls mt-3">
-                                        <button id="prev"><i class="bi bi-arrow-left"></i> Anterior</button>
-                                        <span id="page-num">Página 1</span>
-                                        <button id="next">Siguiente <i class="bi bi-arrow-right"></i></button>
-                                    </div>
+                <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered d-flex align-items-center justify-content-center">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                                <div id="pdf-render-modal"></div>
+                                <div class="pdf-controls mt-3">
+                                    <button id="prev"><i class="bi bi-arrow-left"></i> Anterior</button>
+                                    <span id="page-num">Página 1</span>
+                                    <button id="next">Siguiente <i class="bi bi-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
             <section id="team" class="team section">
 
                 <div class="container section-title" data-aos="fade-up">
