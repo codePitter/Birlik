@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <h1>Finalizar Compra</h1>
+        <nav>
+            <a href="carrito.html">⬅ Volver al carrito</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+        <form id="form-checkout">
+            <label>Nombre completo:<br><input type="text" required></label><br><br>
+            <label>Email:<br><input type="email" required></label><br><br>
+            <label>Dirección de entrega:<br><input type="text" required></label><br><br>
+            <label>Teléfono:<br><input type="tel"></label><br><br>
+            <button type="submit" class="btn-agregar">Confirmar compra</button>
+        </form>
+    </main>
+
+    <script>
+    document.getElementById('form-checkout').addEventListener('submit', function (e) {
+      e.preventDefault();
+      localStorage.removeItem('carrito');
+      window.location.href = 'gracias.html';
+    });
+    </script>
+</body>
+</html>

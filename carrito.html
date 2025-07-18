@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrito de compras</title>
+    <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+
+
+    <header>
+        <h1>Carrito de Compras</h1>
+        <nav>
+            <a href="productos.html">⬅ Volver a productos</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+        <div id="lista-carrito"></div>
+        <div id="total" style="margin-top:1rem; font-weight:bold;"></div>
+        <div style="margin-top:1rem;">
+            <a href="checkout.html" class="btn-agregar">Ir al Checkout</a>
+        </div>
+    </main>
+
+    <script>
+    const contenedor = document.getElementById('lista-carrito');
+    const totalEl = document.getElementById('total');
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    function renderCarrito() {
+      contenedor.innerHTML = '';
+      let total = 0;
+      if (carrito.length === 0) {
+        contenedor.innerHTML = '<p>Tu carrito está vacío.</p>';
+        totalEl.textContent = '';
+        return;
+      }
+      carrito.forEach((prod, index) => {
+        total += prod.precio * prod.cantidad;
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <p><strong>${prod.nombre}</strong> (x${prod.cantidad}) - $${prod.precio * prod.cantidad}
+          <button data-index="${index}" class="btn-eliminar">Eliminar</button></p>
+        `;
+        contenedor.appendChild(div);
+      });
+      totalEl.textContent = `Total: $${total}`;
+    }
+
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('btn-eliminar')) {
+        const index = e.target.dataset.index;
+        carrito.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        renderCarrito();
+      }
+    });
+
+    renderCarrito();
+    </script>
+</body>
+</html>

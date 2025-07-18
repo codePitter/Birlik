@@ -45,6 +45,7 @@
                 <nav id="navmenu" class="navmenu">
                     <ul>
                         <li><a href="#hero" class="active text-black">Inicio</a></li>
+                        <li><a href="productos.html" class="text-black">Productos</a></li>
                         <li><a href="#about" class="text-black">Sobre Nosotros</a></li>
                         <li><a href="#gallery" class="text-black">Menú</a></li>
                         <li><a href="#team" class="text-black">Equipo</a></li>
@@ -460,44 +461,47 @@
 
             // Deshabilitar el botón y cambiar el texto
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Enviando...';
+submitBtn.textContent = 'Enviando...';
 
-            fetch('https://script.google.com/macros/s/AKfycbyW4iuhA30vTpC6fTFpQKEmK1y0UM7J4LbE_tmuMhm4wYEkSLmFZYXdjU_83M_KkU92/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `email=${encodeURIComponent(email)}`
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result === 'success') {
-                        message.textContent = '¡Te has suscripto con éxito!';
-                        message.className = 'mt-3 alert alert-success';
-                        form.reset();
+fetch('https://script.google.com/macros/s/AKfycbyW4iuhA30vTpC6fTFpQKEmK1y0UM7J4LbE_tmuMhm4wYEkSLmFZYXdjU_83M_KkU92/exec', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `email=${encodeURIComponent(email)}`
+})
+.then(response => response.json())
+.then(data => {
+    if (data.result === 'success') {
+        message.textContent = '¡Te has suscripto con éxito!';
+        message.className = 'mt-3 alert alert-success';
+        form.reset();
 
-                        // Rehabilitar el botón después de 2 segundos
-                        setTimeout(() => {
-                            submitBtn.disabled = false;
-                            submitBtn.textContent = 'Enviar';
-                        }, 2000);
-                    } else {
-                        message.textContent = 'Error: ' + data.message;
-                        message.className = 'mt-3 alert alert-danger';
+        // Rehabilitar el botón y ocultar mensaje después de 3 segundos
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Enviar';
+            message.textContent = '';
+            message.className = '';
+        }, 3000);
+    } else {
+        message.textContent = 'Error: ' + data.message;
+        message.className = 'mt-3 alert alert-danger';
 
-                        // Rehabilitar el botón inmediatamente en caso de error
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Enviar';
-                    }
-                })
-                .catch(error => {
-                    message.textContent = 'Error al enviar: ' + error.message;
-                    message.className = 'mt-3 alert alert-danger';
+        // Rehabilitar el botón inmediatamente en caso de error
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar';
+    }
+})
+.catch(error => {
+    message.textContent = 'Error al enviar: ' + error.message;
+    message.className = 'mt-3 alert alert-danger';
 
-                    // Rehabilitar el botón inmediatamente en caso de error
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar';
-                });
+    // Rehabilitar el botón inmediatamente en caso de error
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Enviar';
+});
+
         });
     </script>
 </body>
