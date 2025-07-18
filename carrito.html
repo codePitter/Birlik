@@ -1,29 +1,184 @@
-﻿<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carrito de compras</title>
-    <link rel="stylesheet" href="css/estilos.css" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Index - Bootslander Bootstrap Template</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+        #page-content.blurred {
+            filter: blur(1px);
+            transition: filter 0.3s ease;
+        }
+        .header {
+            transition: all 0.1s;
+        }
+        .card-carrito {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #ffffff6f;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-eliminar {
+            background-color: #e53935; /* rojo fuerte */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            align-self: flex-start; /* lo alinea a la izquierda */
+            margin-top: auto; /* lo empuja hacia el fondo de la card */
+        }
+
+            .btn-eliminar:hover {
+                background-color: #c62828; /* rojo más oscuro al pasar el mouse */
+            }
+
+            .btn-eliminar:active {
+                transform: scale(0.95);
+            }
+    </style>
+
+
 </head>
-<body>
 
+<body class="index-page">
 
-    <header>
-        <h1>Carrito de Compras</h1>
-        <nav>
-            <a href="productos.html">⬅ Volver a productos</a>
-        </nav>
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <!--style="background-color: #66bb6a"-->
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="Birlik Logo">
+                <h1 class="sitename text-black" style="margin-left:3vh">Birlik - Alimentación Saludable</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="index.html" class="active text-black">Inicio</a></li>
+                    <li><a href="carrito.html" class="text-black">Carrito</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+        </div>
     </header>
 
-    <main class="contenedor">
-        <div id="lista-carrito"></div>
-        <div id="total" style="margin-top:1rem; font-weight:bold;"></div>
-        <div style="margin-top:1rem;">
-            <a href="checkout.html" class="btn-agregar">Ir al Checkout</a>
+    <main class="contenedorCarrito">
+        <div id="Carrito" class="container">
+            <div id="lista-carrito"></div>
+            <div id="total"></div>
+            <div class="btn-group pt-5">
+                <div>
+                    <a href="productos.html" class="btn-agregar">Agregar más productos</a>
+                </div>
+                <div class="ms-2">
+                    <a href="checkout.html" class="btn-agregar">Ir al Checkout</a>
+                </div>
+            </div>
         </div>
     </main>
 
+    <section id="footer" style="padding:0px">
+    </section>
+    <footer id="footer" class="contact section footer dark-background">
+
+        <div class="container footer-top px-1">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span class="sitename text-black">Birlik</span>
+                    </a>
+                    <div class="footer-contact pt-3 text-black">
+                        <p>Rosario, Argentina</p>
+                        <p class="mt-3 text-black"><strong>Celular:</strong> <span>+54 341 229 4816</span></p>
+                        <p class="text-black"><strong>Email:</strong> <span>birlik.ros@gmail.com</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4 text-black">
+                        <a href="https://www.facebook.com/people/Birlik-Alimentaci%C3%B3n-Saludable/61572672038463/"><i class="bi bi-facebook text-black"></i></a>
+                        <a href="https://www.instagram.com/birlik.emprendimiento/"><i class="bi bi-instagram text-black"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=543412294816"><i class="bi bi-whatsapp text-black"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links text-black">
+                    <h4 class="text-black">Links útiles</h4>
+                    <ul>
+                        <li><a href="#hero" class="text-black">Inicio</a></li>
+                        <li><a href="#about" class="text-black">Sobre Nosotros</a></li>
+                        <li><a href="#gallery" class="text-black">Menú</a></li>
+                        <li><a href="#team" class="text-black">Equipo</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12 footer-newsletter">
+                    <h4 class="text-black">Nuestro Newsletter</h4>
+                    <p class="text-black">¡Suscribite a nuestro Newsletter y enterate de las últimas novedades y promociones!</p>
+                    <form id="myForm" class="mt-1" style="max-width:400px; padding-left:0;">
+                        <div class="input-group">
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   placeholder="tu@mail.com"
+                                   required
+                                   style="border-top-left-radius: .375rem; border-bottom-left-radius: .375rem;" />
+                            <button type="submit" class="btn btn-success" id="submitBtn">Enviar</button>
+                        </div>
+                    </form>
+                    <div id="message" class="mt-3"></div>
+
+                    <p id="message"></p>
+                </div>
+            </div>
+
+            <div class="container copyright text-center mt-4 text-black">
+                <p>© <span>Copyright</span> <strong class="px-1 sitename text-black">Birlik</strong> <span>All Rights Reserved</span></p>
+                <div class="credits text-black">
+                    Designed by <a href="https://www.linkedin.com/in/hpqode" class="text-dark">Pitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="assets/js/main.js"></script>
+
+    <script src="assets/js/pdfjs/build/pdf.js"></script>
     <script>
     const contenedor = document.getElementById('lista-carrito');
     const totalEl = document.getElementById('total');
@@ -40,10 +195,17 @@
       carrito.forEach((prod, index) => {
         total += prod.precio * prod.cantidad;
         const div = document.createElement('div');
+        div.classList.add('card-carrito');
+
         div.innerHTML = `
-          <p><strong>${prod.nombre}</strong> (x${prod.cantidad}) - $${prod.precio * prod.cantidad}
-          <button data-index="${index}" class="btn-eliminar">Eliminar</button></p>
+          <div class="info-producto">
+            <h5 class="mb-1">${prod.nombre}</h5>
+            <p class="mb-1">Cantidad: ${prod.cantidad}</p>
+            <p class="mb-3 fw-bold">$${prod.precio * prod.cantidad}</p>
+          </div>
+          <button data-index="${index}" class="btn-eliminar">🗑 Eliminar</button>
         `;
+
         contenedor.appendChild(div);
       });
       totalEl.textContent = `Total: $${total}`;
@@ -60,5 +222,83 @@
 
     renderCarrito();
     </script>
+    <script>
+        const form = document.getElementById('myForm');
+        const message = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = form.email.value;
+
+            // Deshabilitar el botón y cambiar el texto
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+
+            fetch('https://script.google.com/macros/s/AKfycbyW4iuhA30vTpC6fTFpQKEmK1y0UM7J4LbE_tmuMhm4wYEkSLmFZYXdjU_83M_KkU92/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${encodeURIComponent(email)}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        message.textContent = '¡Te has suscripto con éxito!';
+                        message.className = 'mt-3 alert alert-success';
+                        form.reset();
+
+                        // Rehabilitar el botón y ocultar mensaje después de 3 segundos
+                        setTimeout(() => {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'Enviar';
+                            message.textContent = '';
+                            message.className = '';
+                        }, 3000);
+                    } else {
+                        message.textContent = 'Error: ' + data.message;
+                        message.className = 'mt-3 alert alert-danger';
+
+                        // Rehabilitar el botón inmediatamente en caso de error
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Enviar';
+                    }
+                })
+                .catch(error => {
+                    message.textContent = 'Error al enviar: ' + error.message;
+                    message.className = 'mt-3 alert alert-danger';
+
+                    // Rehabilitar el botón inmediatamente en caso de error
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Enviar';
+                });
+
+        });
+    </script>
+    <script src="assets/js/carrito.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const nav = document.querySelector('nav');
+            const main = document.querySelector('.contenedorCarrito');
+
+            if (nav && main) {
+                const navHeight = nav.offsetHeight;
+                main.style.paddingTop = navHeight + 65 + 'px'; // +20px extra de aire
+            }
+        });
+    </script>
+    <script>
+        function toggleScrolled() {
+            const selectBody = document.querySelector('body');
+            const selectHeader = document.querySelector('#header');
+            if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+            window.scrollY > 1 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+        }
+
+        document.addEventListener('scroll', toggleScrolled);
+        window.addEventListener('load', toggleScrolled);
+    </script>
 </body>
+
 </html>

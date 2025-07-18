@@ -37,7 +37,8 @@
 
 <body class="index-page">
 
-    <header id="header" class="header d-flex align-items-center fixed-top"> <!--style="background-color: #66bb6a"-->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <!--style="background-color: #66bb6a"-->
         <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
             <a href="index.html" class="logo d-flex align-items-center">
@@ -212,6 +213,22 @@
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
+    <!-- Toast Carrito -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100; min-width: 320px;">
+        <div id="toastCarrito" class="toast align-items-start text-white bg-success border-0 position-relative" role="alert" aria-live="assertive" aria-atomic="true" style="padding: 1.5rem 3rem 3rem 1rem;">
+            <div class="toast-body" id="toastCarritoMensaje" style="padding-right: 2.5rem;">
+                <!-- Aquí va el mensaje dinámico -->
+            </div>
+
+            <!-- Botón cerrar -->
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+
+            <!-- Botón checkout -->
+            <a href="carrito.html" class="btn btn-dark position-absolute bottom-0 end-0 m-2" style="background-color: #2E7D32; border: none; padding: 0.4rem 1rem; font-weight: 600;">
+                👉 Carrito
+            </a>
+        </div>
+    </div>
 
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>

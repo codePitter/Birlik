@@ -968,8 +968,29 @@ section,
     transform: translateY(-10px);
   }
 }
-
 /*Carrito*/
+#toastCarrito .toast-body {
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+#toastCarrito a.btn {
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+}
+
+
+.contenedorCarrito {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    background-image: url("/assets/img/hero-bg-2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/*Productos*/
 
 .grid-productos {
     display: grid;
