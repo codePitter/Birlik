@@ -10,6 +10,7 @@
 
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -27,9 +28,11 @@
             filter: blur(1px);
             transition: filter 0.3s ease;
         }
+
         .header {
             transition: all 0.1s;
         }
+
         .card-carrito {
             display: flex;
             flex-direction: column;
@@ -39,7 +42,9 @@
             margin-bottom: 1rem;
             border-radius: 1rem;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            font-family: Asap;
         }
+
         .btn-eliminar {
             background-color: #e53935; /* rojo fuerte */
             color: white;
@@ -61,6 +66,12 @@
             .btn-eliminar:active {
                 transform: scale(0.95);
             }
+        body {
+            font-family: 'Asap', sans-serif;
+        }
+        #carrito-h1 p #lista-carrito {
+            font-family: 'Asap', sans-serif;
+        }
     </style>
 
 
@@ -80,16 +91,17 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="index.html" class="active text-black">Inicio</a></li>
-                    <li><a href="carrito.html" class="text-black">Carrito</a></li>
+                    <li><a href="productos.html" class="text-black">Productos</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
         </div>
     </header>
-
     <main class="contenedorCarrito">
         <div id="Carrito" class="container">
+            <h1 class="text-black" id="carrito-h1">CARRITO</h1>
+
             <div id="lista-carrito"></div>
             <div id="total"></div>
             <div class="btn-group pt-5">

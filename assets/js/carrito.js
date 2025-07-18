@@ -1,6 +1,4 @@
-﻿// carrito.js
-
-// Inicializar carrito desde localStorage
+﻿// Inicializar carrito desde localStorage
 document.addEventListener('DOMContentLoaded', () => {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
