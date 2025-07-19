@@ -231,7 +231,7 @@ h6 {
     height: 2px;
     bottom: -6px;
     left: 0;
-    background-color: var(--nav-hover-color);
+    background-color: #ffffffad;
     visibility: hidden;
     width: 0px;
     transition: all 0.3s ease-in-out 0s;
@@ -978,7 +978,7 @@ section,
   font-weight: 600;
   padding: 0.25rem 0.75rem;
 }
-    .contenedorCarrito {
+.contenedorCarrito {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
@@ -989,6 +989,16 @@ section,
     background-repeat: no-repeat;
 }
 /*Productos*/
+.container-checkout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    background-image: url("/assets/img/hero-bg-2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 .grid-productos {
     display: grid;

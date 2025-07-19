@@ -1,35 +1,349 @@
-﻿<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
-    <link rel="stylesheet" href="css/estilos.css">
-</head>
-<body>
-    <header>
-        <h1>Finalizar Compra</h1>
-        <nav>
-            <a href="carrito.html">⬅ Volver al carrito</a>
-        </nav>
-    </header>
+<!DOCTYPE html>
+<html lang="en">
 
-    <main class="contenedor">
-        <form id="form-checkout">
-            <label>Nombre completo:<br><input type="text" required></label><br><br>
-            <label>Email:<br><input type="email" required></label><br><br>
-            <label>Dirección de entrega:<br><input type="text" required></label><br><br>
-            <label>Teléfono:<br><input type="tel"></label><br><br>
-            <button type="submit" class="btn-agregar">Confirmar compra</button>
-        </form>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Index - Bootslander Bootstrap Template</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+        #page-content.blurred {
+            filter: blur(1px);
+            transition: filter 0.3s ease;
+        }
+
+/*        body {
+            font-family: 'Asap', sans-serif;
+            background-color: #f5f5f5;
+            padding: 2rem;
+        }*/
+
+        .checkout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* Resumen */
+        .resumen {
+            flex: 1;
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+        }
+
+            .resumen h3 {
+                margin-bottom: 1rem;
+                color: #2c3e50;
+            }
+
+            .resumen ul {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            .resumen li {
+                margin-bottom: 0.8rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .resumen .nombre {
+                font-weight: bold;
+            }
+
+            .resumen .btn-eliminar {
+                background: #e74c3c;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 0.3rem 0.6rem;
+                cursor: pointer;
+                font-size: 0.8rem;
+            }
+
+        .btn-agregar-mas {
+            display: inline-block;
+            margin-top: 1rem;
+            background: #3498db;
+            color: white;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Formulario */
+        #checkoutForm {
+            flex: 1;
+            background: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+        }
+
+            #checkoutForm h2 {
+                margin-bottom: 1.5rem;
+                text-align: center;
+                color: #2c3e50;
+            }
+
+            #checkoutForm input {
+                width: 100%;
+                padding: 0.7rem;
+                margin-bottom: 1rem;
+                border: 1.8px solid #ccc;
+                border-radius: 6px;
+                font-size: 1rem;
+            }
+
+            #checkoutForm button {
+                width: 100%;
+                padding: 0.8rem;
+                background-color: #66bb6a;
+                border: none;
+                border-radius: 8px;
+                color: white;
+                font-size: 1.1rem;
+                font-weight: 700;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+                #checkoutForm button:hover {
+                    background-color: #558b49;
+                }
+    </style>
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <!--style="background-color: #66bb6a"-->
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="Birlik Logo">
+                <h1 class="sitename text-black" style="margin-left:3vh">Alimentación Saludable</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="index.html" class="text-black">Inicio</a></li>
+                    <li><a href="productos.html" class="text-black">Productos</a></li>
+                    <li><a href="carrito.html" class="text-black">Carrito</a></li>
+                    <li><a href="" class="active text-black">Checkout</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+        </div>
+    </header>
+    <main class="container-checkout">
+        <div class="checkout-container">
+            <!-- Resumen del carrito -->
+            <div class="resumen">
+                <h3>Resumen del Pedido</h3>
+                <ul id="listaResumen"></ul>
+                <p><strong>Total:</strong> $<span id="totalResumen">0</span></p>
+                <a href="productos.html" class="btn-agregar-mas">+ Agregar más productos</a>
+            </div>
+
+            <!-- Formulario de checkout -->
+            <form id="checkoutForm">
+                <h2>Finalizar Pedido</h2>
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <input type="text" name="direccion" placeholder="Dirección" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <button type="submit">Enviar pedido por WhatsApp</button>
+            </form>
+        </div>
     </main>
 
+    <section id="footer" style="padding:0px">
+    </section>
+    <footer id="footer" class="contact section footer dark-background">
+
+        <div class="container footer-top px-1">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span class="sitename text-black">Birlik</span>
+                    </a>
+                    <div class="footer-contact pt-3 text-black">
+                        <p>Rosario, Argentina</p>
+                        <p class="mt-3 text-black"><strong>Celular:</strong> <span>+54 341 229 4816</span></p>
+                        <p class="text-black"><strong>Email:</strong> <span>birlik.ros@gmail.com</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4 text-black">
+                        <a href="https://www.facebook.com/people/Birlik-Alimentaci%C3%B3n-Saludable/61572672038463/"><i class="bi bi-facebook text-black"></i></a>
+                        <a href="https://www.instagram.com/birlik.emprendimiento/"><i class="bi bi-instagram text-black"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=543412294816"><i class="bi bi-whatsapp text-black"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links text-black">
+                    <h4 class="text-black">Links útiles</h4>
+                    <ul>
+                        <li><a href="#hero" class="text-black">Inicio</a></li>
+                        <li><a href="#about" class="text-black">Sobre Nosotros</a></li>
+                        <li><a href="#gallery" class="text-black">Menú</a></li>
+                        <li><a href="#team" class="text-black">Equipo</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12 footer-newsletter">
+                    <h4 class="text-black">Nuestro Newsletter</h4>
+                    <p class="text-black">¡Suscribite a nuestro Newsletter y enterate de las últimas novedades y promociones!</p>
+                    <form id="myForm" class="mt-1" style="max-width:400px; padding-left:0;">
+                        <div class="input-group">
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   placeholder="tu@mail.com"
+                                   required
+                                   style="border-top-left-radius: .375rem; border-bottom-left-radius: .375rem;" />
+                            <button type="submit" class="btn btn-success" id="submitBtn">Enviar</button>
+                        </div>
+                    </form>
+                    <div id="message" class="mt-3"></div>
+
+                    <p id="message"></p>
+                </div>
+            </div>
+
+            <div class="container copyright text-center mt-4 text-black">
+                <p>© <span>Copyright</span> <strong class="px-1 sitename text-black">Birlik</strong> <span>All Rights Reserved</span></p>
+                <div class="credits text-black">
+                    Designed by <a href="https://www.linkedin.com/in/hpqode" class="text-dark">Pitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="assets/js/main.js"></script>
+
+    <script src="assets/js/pdfjs/build/pdf.js"></script>
     <script>
-    document.getElementById('form-checkout').addEventListener('submit', function (e) {
-      e.preventDefault();
-      localStorage.removeItem('carrito');
-      window.location.href = 'gracias.html';
-    });
+        document.getElementById('form-checkout').addEventListener('submit', function (e) {
+            e.preventDefault();
+            localStorage.removeItem('carrito');
+            window.location.href = 'gracias.html';
+        });
+    </script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const nav = document.querySelector('nav');
+            const main = document.querySelector('.container-checkout');
+
+            if (nav && main) {
+                const navHeight = nav.offsetHeight;
+                main.style.paddingTop = navHeight + 65 + 'px'; // +20px extra de aire
+            }
+        });
+    </script>
+    <script>
+        function toggleScrolled() {
+            const selectBody = document.querySelector('body');
+            const selectHeader = document.querySelector('#header');
+            if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+            window.scrollY > 1 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+        }
+
+        document.addEventListener('scroll', toggleScrolled);
+        window.addEventListener('load', toggleScrolled);
+    </script>
+
+    <script>
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        function renderResumen() {
+            const lista = document.getElementById('listaResumen');
+            const total = document.getElementById('totalResumen');
+            lista.innerHTML = '';
+            let totalCompra = 0;
+
+            carrito.forEach((prod, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+            <span class="nombre">${prod.nombre} (x${prod.cantidad})</span>
+            <div>
+              $${(prod.precio * prod.cantidad).toFixed(2)}
+              <button class="btn-eliminar" onclick="eliminarProducto(${index})">X</button>
+            </div>
+          `;
+                lista.appendChild(li);
+                totalCompra += prod.precio * prod.cantidad;
+            });
+
+            total.textContent = totalCompra.toFixed(2);
+        }
+
+        function eliminarProducto(index) {
+            carrito.splice(index, 1);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            renderResumen();
+        }
+
+        // Enviar por WhatsApp
+        document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const nombre = this.nombre.value;
+            const direccion = this.direccion.value;
+            const email = this.email.value;
+
+            let mensaje = `📦 *Pedido nuevo*%0A`;
+            mensaje += `👤 Nombre: ${nombre}%0A📍 Dirección: ${direccion}%0A📧 Email: ${email}%0A%0A`;
+            mensaje += `🛒 *Productos:*%0A`;
+
+            carrito.forEach(p => {
+                mensaje += `• ${p.nombre} (x${p.cantidad}) - $${(p.precio * p.cantidad).toFixed(2)}%0A`;
+            });
+
+            const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+            mensaje += `%0A💰 *Total:* $${total.toFixed(2)}`;
+
+            // Número de WhatsApp con código de país
+            const telefono = '+5493417120152';
+            window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+        });
+
+        renderResumen();
     </script>
 </body>
+
 </html>
