@@ -992,7 +992,7 @@ section,
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     padding: 2rem;
-    background-image: url("/assets/img/hero-bg-2.jpg");
+    background-image: url("./assets/img/hero-bg-2.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
