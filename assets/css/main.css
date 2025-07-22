@@ -80,6 +80,10 @@ h6 {
   font-family: var(--heading-font);
 }
 
+.header .logo h1.sitename {
+    margin-left: 3vh;
+}
+
 /* PHP Email Form Messages
 ------------------------------*/
 .php-email-form .error-message {
@@ -310,7 +314,7 @@ h6 {
 /* Mobile Navigation */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
-    color: var(--nav-color);
+    color: black;
     font-size: 28px;
     line-height: 0;
     margin-right: 10px;
@@ -411,7 +415,7 @@ h6 {
   }
 
   .mobile-nav-active .mobile-nav-toggle {
-    color: #fff;
+    color: black;
     position: absolute;
     font-size: 32px;
     top: 15px;
@@ -988,15 +992,69 @@ section,
   padding: 0.25rem 0.75rem;
 }
 .contenedorCarrito {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     padding: 2rem;
-    background-image: url("../img/hero-bg-2.jpg");
+    background-image: url("/assets/img/hero-bg-2.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    z-index: 1;
 }
+
+    .contenedorCarrito::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #3cb3713b; /* oscuridad ajustable */
+        z-index: 0;
+    }
+
+    .contenedorCarrito > * {
+        position: relative;
+        z-index: 1; /* asegura que el contenido esté por encima del filtro */
+    }
+#popup-exito {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #66bb6a; /* verde suave */
+    color: white;
+    padding: 1rem 1.5rem 1rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-weight: 700;
+    font-family: 'Asap', sans-serif;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 300px;
+}
+
+#popup-exito .close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 900;
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+    #popup-exito .close-btn:hover {
+        color: #333;
+    }
+
+
 /*Productos*/
 .container-checkout {
     display: grid;
@@ -1010,6 +1068,7 @@ section,
 }
 
 .grid-productos {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
@@ -1018,7 +1077,25 @@ section,
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    z-index: 1;
 }
+
+    .grid-productos::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #3cb3713b; /* Nivel de oscurecimiento */
+        z-index: 0;
+    }
+
+    .grid-productos > * {
+        position: relative;
+        z-index: 1; /* Para que el contenido esté sobre el filtro */
+    }
+
 
 .card {
     background-color: #fff;
@@ -1347,12 +1424,14 @@ canvas {
 }
 
 @media (max-width: 768px) {
+    .about .icon-boxes .col-md-6:nth-child(2) .icon-box,
+    .about .icon-boxes .col-md-6:nth-child(4) .icon-box {
+        margin-top: 0;
+    }
+    .header .logo h1.sitename {
+        margin-left: 1vh;
+    }
 
-  .about .icon-boxes .col-md-6:nth-child(2) .icon-box,
-  .about .icon-boxes .col-md-6:nth-child(4) .icon-box {
-    margin-top: 0;
-  }
-}
 
 /*--------------------------------------------------------------
 # Features Section
