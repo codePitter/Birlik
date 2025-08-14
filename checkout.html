@@ -174,11 +174,22 @@
             <!-- Formulario de checkout -->
             <form id="checkoutForm">
                 <h2>Finalizar Pedido</h2>
+
                 <input type="text" name="nombre" placeholder="Nombre completo" required>
                 <input type="text" name="direccion" placeholder="Dirección" required>
+                <input type="tel" name="telefono" placeholder="Teléfono (ej: 3412345678)" required
+                       pattern="^[0-9]{8,15}$" title="Solo números, entre 8 y 15 dígitos">
+                <input type="time" name="horaProgramada" placeholder="Hora programada (opcional)">
                 <input type="email" name="email" placeholder="Email" required>
-                <button type="submit">Enviar pedido por WhatsApp</button>
+
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success">Enviar pedido por WhatsApp</button>
+                    <button type="button" id="btnEnviarPedido" class="btn btn-primary">
+                        Enviar pedido
+                    </button>
+                </div>
             </form>
+
         </div>
     </main>
 
@@ -264,42 +275,43 @@
     <script src="assets/js/main.js"></script>
 
     <script src="assets/js/pdfjs/build/pdf.js"></script>
-    <script>
+    <!--<script>
         document.getElementById('form-checkout').addEventListener('submit', function (e) {
             e.preventDefault();
             localStorage.removeItem('carrito');
             window.location.href = 'gracias.html';
         });
-    </script>
+    </script>-->
     <script>
+        // ===================== Ajuste de layout (header) =====================
         window.addEventListener('DOMContentLoaded', () => {
-            const nav = document.querySelector('nav');
+            const header = document.getElementById('header');
             const main = document.querySelector('.container-checkout');
-
-            if (nav && main) {
-                const navHeight = nav.offsetHeight;
-                main.style.paddingTop = navHeight + 65 + 'px'; // +20px extra de aire
+            if (header && main) {
+                main.style.paddingTop = (header.offsetHeight + 65) + 'px';
             }
         });
-    </script>
-    <script>
+
         function toggleScrolled() {
             const selectBody = document.querySelector('body');
             const selectHeader = document.querySelector('#header');
-            if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
-            window.scrollY > 1 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+            if (!selectHeader.classList.contains('scroll-up-sticky')
+                && !selectHeader.classList.contains('sticky-top')
+                && !selectHeader.classList.contains('fixed-top')) return;
+            window.scrollY > 1 ? selectBody.classList.add('scrolled')
+                : selectBody.classList.remove('scrolled');
         }
-
         document.addEventListener('scroll', toggleScrolled);
         window.addEventListener('load', toggleScrolled);
-    </script>
 
-    <script>
+        // ===================== Carrito & Resumen =====================
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
         function renderResumen() {
             const lista = document.getElementById('listaResumen');
             const total = document.getElementById('totalResumen');
+            if (!lista || !total) return;
+
             lista.innerHTML = '';
             let totalCompra = 0;
 
@@ -312,12 +324,12 @@
             carrito.forEach((prod, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span class="nombre">${prod.nombre} (x${prod.cantidad})</span>
-                    <div>
-                      $${(prod.precio * prod.cantidad).toFixed(2)}
-                      <button class="btn-eliminar" aria-label="Eliminar producto ${prod.nombre}" onclick="eliminarProducto(${index})">X</button>
-                    </div>
-                `;
+            <span class="nombre">${prod.nombre} (x${prod.cantidad})</span>
+            <div>
+              $${(prod.precio * prod.cantidad).toFixed(2)}
+              <button class="btn-eliminar" aria-label="Eliminar producto ${prod.nombre}" onclick="eliminarProducto(${index})">X</button>
+            </div>
+          `;
                 lista.appendChild(li);
                 totalCompra += prod.precio * prod.cantidad;
             });
@@ -330,82 +342,162 @@
             localStorage.setItem('carrito', JSON.stringify(carrito));
             renderResumen();
         }
+        window.eliminarProducto = eliminarProducto; // para el onclick del botón
+
         function mostrarPopupExito() {
             const popup = document.getElementById('popup-exito');
-            popup.style.display = 'flex'; // mostrar popup
+            if (popup) popup.style.display = 'flex';
+        }
+        (function bindPopupClose() {
+            const popup = document.getElementById('popup-exito');
+            if (popup) {
+                const closeBtn = popup.querySelector('.close-btn');
+                if (closeBtn) closeBtn.addEventListener('click', () => popup.style.display = 'none');
+            }
+        })();
+
+        // ===================== Helpers para payload =====================
+        const WEBHOOK_URL = 'https://webhook-fcm.vercel.app/api/order'; // <-- cámbialo por tu endpoint
+
+        function horaToEpoch(hhmm) {
+            if (!hhmm) return null;
+            const [hh, mm] = hhmm.split(':').map(Number);
+            const d = new Date();
+            d.setHours(hh, mm, 0, 0);
+            return d.getTime();
         }
 
-        document.getElementById('popup-exito').querySelector('.close-btn').addEventListener('click', () => {
-            const popup = document.getElementById('popup-exito');
-            popup.style.display = 'none'; // ocultar popup al cerrar
-        });
+        function toArsString(n) {
+            return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(n);
+        }
 
+        function armarPayload({ nombre, direccion, email, telefono, horaProgramada }, carrito) {
+            const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+            const now = Date.now();
+            return {
+                id: `W-${now}`,
+                customerName: nombre,
+                total: toArsString(total),
+                status: 'PENDING',
+                slotStart: horaToEpoch(horaProgramada),
+                slotEnd: null,
+                courier: null,
+                phone: telefono,
+                address: direccion,
+                email: email,
+                items: carrito.map(p => ({
+                    name: p.nombre,
+                    qty: p.cantidad,
+                    unitPrice: p.precio,
+                    subtotal: Number((p.precio * p.cantidad).toFixed(2))
+                })),
+                createdAt: now,
+                source: 'web'
+            };
+        }
 
-        document.getElementById('checkoutForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+        // ===================== Formulario (WhatsApp + Enviar pedido) =====================
+        const form = document.querySelector('main #checkoutForm');
+        if (form) {
+            // Enviar por WhatsApp
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            // Obtener campos
-            const nombre = this.nombre.value.trim();
-            const direccion = this.direccion.value.trim();
-            const email = this.email.value.trim();
+                const nombre = this.nombre?.value.trim() || '';
+                const direccion = this.direccion?.value.trim() || '';
+                const telefono = this.telefono?.value.trim() || '';
+                const horaProgramada = this.horaProgramada?.value || '';
+                const email = this.email?.value.trim() || '';
 
-            // Validaciones básicas
-            if (!nombre) {
-                alert('Por favor ingresa tu nombre completo.');
-                this.nombre.focus();
-                return;
-            }
-            if (!direccion) {
-                alert('Por favor ingresa tu dirección.');
-                this.direccion.focus();
-                return;
-            }
-            if (!email) {
-                alert('Por favor ingresa tu email.');
-                this.email.focus();
-                return;
-            }
-            // Validar formato email básico
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Por favor ingresa un email válido.');
-                this.email.focus();
-                return;
-            }
-            if (carrito.length === 0) {
-                alert('Tu carrito está vacío. Agrega productos antes de enviar el pedido.');
-                return;
-            }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const telRegex = /^[0-9]{8,15}$/;
 
-            // Construir mensaje WhatsApp
-            let mensaje = `📦 *Pedido nuevo*%0A`;
-            mensaje += `👤 Nombre: ${nombre}%0A📍 Dirección: ${direccion}%0A📧 Email: ${email}%0A%0A`;
-            mensaje += `🛒 *Productos:*%0A`;
+                if (!nombre) { alert('Por favor ingresa tu nombre completo.'); this.nombre.focus(); return; }
+                if (!direccion) { alert('Por favor ingresa tu dirección.'); this.direccion.focus(); return; }
+                if (!telRegex.test(telefono)) { alert('Teléfono inválido. Solo números, 8 a 15 dígitos.'); this.telefono.focus(); return; }
+                if (!emailRegex.test(email)) { alert('Por favor ingresa un email válido.'); this.email.focus(); return; }
+                if (carrito.length === 0) { alert('Tu carrito está vacío. Agrega productos antes de enviar el pedido.'); return; }
 
-            carrito.forEach(p => {
-                mensaje += `• ${p.nombre} (x${p.cantidad}) - $${(p.precio * p.cantidad).toFixed(2)}%0A`;
+                // Construir mensaje WhatsApp
+                let mensaje = `📦 *Pedido nuevo*%0A`;
+                mensaje += `👤 Nombre: ${nombre}%0A📍 Dirección: ${direccion}%0A📧 Email: ${email}%0A📱 Tel: ${telefono}%0A`;
+                if (horaProgramada) mensaje += `⏰ Hora programada: ${horaProgramada}%0A`;
+                mensaje += `%0A🛒 *Productos:*%0A`;
+
+                carrito.forEach(p => {
+                    mensaje += `• ${p.nombre} (x${p.cantidad}) - $${(p.precio * p.cantidad).toFixed(2)}%0A`;
+                });
+
+                const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
+                mensaje += `%0A💰 *Total:* $${total.toFixed(2)}`;
+
+                const telefonoDestino = '5493412282254'; // <-- tu WhatsApp receptor
+                window.open(`https://wa.me/${telefonoDestino}?text=${mensaje}`, '_blank');
+
+                // limpiar
+                localStorage.removeItem('carrito');
+                carrito = [];
+                renderResumen();
+                this.reset();
+                mostrarPopupExito();
             });
 
-            const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
-            mensaje += `%0A💰 *Total:* $${total.toFixed(2)}`;
+            // Enviar pedido (POST webhook) con confirmación
+            const btnEnviarPedido = document.getElementById('btnEnviarPedido');
+            if (btnEnviarPedido) {
+                btnEnviarPedido.addEventListener('click', async () => {
+                    const nombre = form.nombre?.value.trim() || '';
+                    const direccion = form.direccion?.value.trim() || '';
+                    const telefono = form.telefono?.value.trim() || '';
+                    const horaProgramada = form.horaProgramada?.value || '';
+                    const email = form.email?.value.trim() || '';
 
-            // Número de WhatsApp con código de país (cámbialo aquí si querés)
-            const telefono = '5493417120152';
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    const telRegex = /^[0-9]{8,15}$/;
 
-            // Abrir WhatsApp en nueva pestaña
-            window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+                    if (!nombre) { alert('Por favor ingresa tu nombre completo.'); form.nombre.focus(); return; }
+                    if (!direccion) { alert('Por favor ingresa tu dirección.'); form.direccion.focus(); return; }
+                    if (!telRegex.test(telefono)) { alert('Teléfono inválido. Solo números, 8 a 15 dígitos.'); form.telefono.focus(); return; }
+                    if (!emailRegex.test(email)) { alert('Por favor ingresa un email válido.'); form.email.focus(); return; }
+                    if (carrito.length === 0) { alert('Tu carrito está vacío.'); return; }
 
-            // Vaciar carrito y refrescar página
-            localStorage.removeItem('carrito');
-            carrito = [];
-            renderResumen();
-            this.reset();
+                    const ok = confirm(
+                        'Esta opción solo está disponible con pago en efectivo o transferencia confirmada.\n\n' +
+                        'Recibirás un mensaje de texto confirmando la transferencia recibida al número ingresado.\n\n' +
+                        '¿Deseás continuar?'
+                    );
+                    if (!ok) return;
 
-            mostrarPopupExito();
-        });
+                    const payload = armarPayload({ nombre, direccion, email, telefono, horaProgramada }, carrito);
 
+                    try {
+                        const resp = await fetch(WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!resp.ok) {
+                            const txt = await resp.text().catch(() => '');
+                            throw new Error(`HTTP ${resp.status} ${txt}`);
+                        }
+
+                        localStorage.removeItem('carrito');
+                        carrito = [];
+                        renderResumen();
+                        form.reset();
+                        mostrarPopupExito();
+                    } catch (e) {
+                        console.error('Error enviando pedido:', e);
+                        alert('No pudimos enviar el pedido. Intenta nuevamente en unos minutos.');
+                    }
+                });
+            }
+        }
+
+        // Render inicial
         renderResumen();
     </script>
+
 </body>
 
 </html>
