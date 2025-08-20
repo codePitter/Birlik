@@ -295,7 +295,7 @@ function abrirWhatsAppConPedido(datos, carritoLS) {
     const total = carritoLS.reduce((acc, p) => acc + (Number(p.precio) * Number(p.cantidad)), 0);
     mensaje += `%0A💰 *Total:* $${total.toFixed(2)}`;
 
-    const telefonoDestino = '5493412282254'; // <- tu número receptor con código país y sin signos
+    const telefonoDestino = '5493412294816'; // <- tu número receptor con código país y sin signos
     const url = `https://wa.me/${telefonoDestino}?text=${mensaje}`;
 
     // Abrir en una pestaña nueva; al estar dentro del click, no lo bloquea
