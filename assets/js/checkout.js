@@ -256,42 +256,83 @@ btnEnviarPedido?.addEventListener('click', async (e) => {
 });
 
 /* ===== Envío por WhatsApp (submit del form) ===== */
-if (form) {
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        const nombre = this.nombre?.value.trim() || '';
-        const direccion = this.direccion?.value.trim() || '';
-        const telefono = this.telefono?.value.trim() || '';
-        const horaProgramada = this.horaProgramada?.value || '';
-        const email = this.email?.value.trim() || '';
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const telRegex = /^[0-9]{8,15}$/;
+// ===== WhatsApp =====
+const btnEnviarWhatsApp = document.getElementById('btnEnviarWhatsApp');
 
-        if (!nombre) { await showAlert('Por favor ingresa tu nombre completo.', { title: 'Dato requerido' }); this.nombre.focus(); return; }
-        if (!direccion) { await showAlert('Por favor ingresa tu dirección.', { title: 'Dato requerido' }); this.direccion.focus(); return; }
-        if (!telRegex.test(telefono)) { await showAlert('Teléfono inválido. Solo números, 8 a 15 dígitos.', { title: 'Dato requerido' }); this.telefono.focus(); return; }
-        if (!emailRegex.test(email)) { await showAlert('Por favor ingresa un email válido.', { title: 'Dato requerido' }); this.email.focus(); return; }
-        if (carrito.length === 0) { await showAlert('Tu carrito está vacío. Agrega productos antes de enviar el pedido.', { title: 'Sin productos' }); return; }
+// Valida y devuelve los datos; si falta algo, muestra alerta y devuelve null
+function tomarDatosForm(f) {
+    const nombre = f.nombre?.value.trim() || '';
+    const direccion = f.direccion?.value.trim() || '';
+    const telefono = f.telefono?.value.trim() || '';
+    const horaProgramada = f.horaProgramada?.value || '';
+    const email = f.email?.value.trim() || '';
 
-        let mensaje = `📦 *Pedido nuevo*%0A`;
-        mensaje += `👤 Nombre: ${nombre}%0A📍 Dirección: ${direccion}%0A📧 Email: ${email}%0A📱 Tel: ${telefono}%0A`;
-        if (horaProgramada) mensaje += `⏰ Hora programada: ${horaProgramada}%0A`;
-        mensaje += `%0A🛒 *Productos:*%0A`;
-        carrito.forEach(p => {
-            mensaje += `• ${p.nombre} (x${p.cantidad}) - $${(p.precio * p.cantidad).toFixed(2)}%0A`;
-        });
-        const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
-        mensaje += `%0A💰 *Total:* $${total.toFixed(2)}`;
-        const telefonoDestino = '5493412282254';
-        window.open(`https://wa.me/${telefonoDestino}?text=${mensaje}`, '_blank');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const telRegex = /^[0-9]{8,15}$/;
 
-        localStorage.removeItem('carrito');
-        carrito = [];
-        renderResumen();
-        this.reset();
-        mostrarPopupExito();
-    });
+    if (!nombre) { alert('Por favor ingresa tu nombre completo.'); f.nombre?.focus(); return null; }
+    if (!direccion) { alert('Por favor ingresa tu dirección.'); f.direccion?.focus(); return null; }
+    if (!telRegex.test(telefono)) { alert('Teléfono inválido. Solo números, 8 a 15 dígitos.'); f.telefono?.focus(); return null; }
+    if (!emailRegex.test(email)) { alert('Por favor ingresa un email válido.'); f.email?.focus(); return null; }
+
+    return { nombre, direccion, telefono, horaProgramada, email };
 }
+
+function abrirWhatsAppConPedido(datos, carritoLS) {
+    let mensaje = `📦 *Pedido nuevo*%0A`;
+    mensaje += `👤 Nombre: ${datos.nombre}%0A`;
+    mensaje += `📍 Dirección: ${datos.direccion}%0A`;
+    mensaje += `📧 Email: ${datos.email}%0A`;
+    mensaje += `📱 Tel: ${datos.telefono}%0A`;
+    if (datos.horaProgramada) mensaje += `⏰ Hora programada: ${datos.horaProgramada}%0A`;
+    mensaje += `%0A🛒 *Productos:*%0A`;
+
+    carritoLS.forEach(p => {
+        const subtotal = (Number(p.precio) * Number(p.cantidad)).toFixed(2);
+        mensaje += `• ${p.nombre} (x${p.cantidad}) - $${subtotal}%0A`;
+    });
+
+    const total = carritoLS.reduce((acc, p) => acc + (Number(p.precio) * Number(p.cantidad)), 0);
+    mensaje += `%0A💰 *Total:* $${total.toFixed(2)}`;
+
+    const telefonoDestino = '5493412282254'; // <- tu número receptor con código país y sin signos
+    const url = `https://wa.me/${telefonoDestino}?text=${mensaje}`;
+
+    // Abrir en una pestaña nueva; al estar dentro del click, no lo bloquea
+    window.open(url, '_blank');
+}
+
+// Click explícito en el botón
+btnEnviarWhatsApp?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!form) return;
+    const datos = tomarDatosForm(form);
+    if (!datos) return;
+
+    const carritoLS = JSON.parse(localStorage.getItem('carrito') || '[]');
+    if (!Array.isArray(carritoLS) || carritoLS.length === 0) {
+        alert('Tu carrito está vacío. Agrega productos antes de enviar el pedido.');
+        return;
+    }
+
+    abrirWhatsAppConPedido(datos, carritoLS);
+
+    // Limpieza de UI
+    localStorage.removeItem('carrito');
+    carrito = [];
+    renderResumen?.();
+    form.reset?.();
+    mostrarPopupExito?.();
+});
+
+// Fallback: si el botón quedó como type="submit", usamos el submit del form
+form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    btnEnviarWhatsApp?.click();
+});
+
 
 /* ===== Render inicial ===== */
 renderResumen();
