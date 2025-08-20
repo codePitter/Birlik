@@ -745,6 +745,12 @@ section,
 .section-title {
   padding-bottom: 60px;
   position: relative;
+  color: var(--heading-color);
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: var(--heading-font);
 }
 
 .section-title h2 {
@@ -777,16 +783,6 @@ section,
   text-transform: uppercase;
   font-family: var(--heading-font);
 }
-.section-title {
-    color: var(--heading-color);
-    margin: 0;
-    margin: 0;
-    font-size: 28px;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-family: var(--heading-font);
-}
-
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -1278,7 +1274,7 @@ canvas {
     font-weight: bold;
     font-size: 16px;
     color: #333;
-    background: rgb(255, 255, 255, 0,45);
+    background: rgba(255, 255, 255, 0.45);
     padding: 4px 12px;
     border-radius: 5px;
     z-index: 5;
@@ -1428,10 +1424,11 @@ canvas {
     .about .icon-boxes .col-md-6:nth-child(4) .icon-box {
         margin-top: 0;
     }
+
     .header .logo h1.sitename {
         margin-left: 1vh;
     }
-
+}
 
 /*--------------------------------------------------------------
 # Features Section
@@ -2091,4 +2088,35 @@ canvas {
 
 .contact .php-email-form button[type=submit]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 25%);
+}
+
+/* ✅ Restaurar estilos SOLO para el alert */
+#uiModal .modal-content {
+    background: #fff !important;
+    box-shadow: 10px 10px 30px rgba(0,0,0,.15) !important;
+    border-radius: 12px;
+    border: 0;
+}
+
+#uiModal .modal-header,
+#uiModal .modal-body,
+#uiModal .modal-footer {
+    background: #fff !important;
+}
+
+/* ✅ Volver a ver el backdrop (sombra) por defecto */
+.modal-backdrop.show {
+    opacity: .5; /* o el valor que prefieras (0.4 ~ 0.6) */
+}
+
+/* ✅ Si querés mantener el modal del PDF transparente,
+   limitá esas reglas SOLO a ese modal */
+#pdf-render-modal .modal-content {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+/* Backdrop transparente SOLO para el modal de PDF */
+#pdf-render-modal ~ .modal-backdrop.show {
+    opacity: 0 !important;
 }

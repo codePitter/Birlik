@@ -172,23 +172,52 @@
             </div>
 
             <!-- Formulario de checkout -->
-            <form id="checkoutForm">
-                <h2>Finalizar Pedido</h2>
+            <form id="checkoutForm" autocomplete="on">
+                <h2 class="h4 mb-3">Finalizar Pedido</h2>
 
-                <input type="text" name="nombre" placeholder="Nombre completo" required>
-                <input type="text" name="direccion" placeholder="Dirección" required>
-                <input type="tel" name="telefono" placeholder="Teléfono (ej: 3412345678)" required
-                       pattern="^[0-9]{8,15}$" title="Solo números, entre 8 y 15 dígitos">
-                <input type="time" name="horaProgramada" placeholder="Hora programada (opcional)">
-                <input type="email" name="email" placeholder="Email" required>
+                <div class="mb-2">
+                    <!--<label for="nombre" class="form-label">Nombre completo</label>-->
+                    <input id="nombre" name="nombre" type="text" class="form-control"
+                           placeholder="Nombre completo" required autocomplete="name">
+                </div>
+
+                <div class="mb-2">
+                    <!--<label for="direccion" class="form-label">Dirección</label>-->
+                    <input id="direccion" name="direccion" type="text" class="form-control"
+                           placeholder="Dirección" required autocomplete="street-address">
+                </div>
+
+                <div class="mb-2">
+                    <!--<label for="telefono" class="form-label">Teléfono</label>-->
+                    <input id="telefono" name="telefono" type="tel" class="form-control"
+                           placeholder="Teléfono (ej: 3412345678)" inputmode="numeric"
+                           pattern="^[0-9]{8,15}$" title="Solo números, entre 8 y 15 dígitos" required>
+                </div>
+
+                <div class="mb-2">
+                    <label for="horaProgramada" class="form-label">Hora programada (opcional)</label>
+                    <input id="horaProgramada" name="horaProgramada" type="time" class="form-control"
+                           placeholder="Hora programada (opcional)">
+                </div>
+
+                <div class="mb-3">
+                    <!--<label for="email" class="form-label">Email</label>-->
+                    <input id="email" name="email" type="email" class="form-control"
+                           placeholder="Email" required autocomplete="email">
+                </div>
 
                 <div class="d-grid gap-2 d-md-flex">
-                    <button type="submit" class="btn btn-success">Enviar pedido por WhatsApp</button>
+                    <!-- Dejalo como button para NO enviar el form automáticamente -->
+                    <button type="button" id="btnEnviarWhatsApp" class="btn btn-success">
+                        Enviar pedido por WhatsApp
+                    </button>
+
                     <button type="button" id="btnEnviarPedido" class="btn btn-primary">
                         Enviar pedido
                     </button>
                 </div>
             </form>
+
 
         </div>
     </main>
@@ -228,22 +257,19 @@
                 <div class="col-lg-4 col-md-12 footer-newsletter">
                     <h4 class="text-black">Nuestro Newsletter</h4>
                     <p class="text-black">¡Suscribite a nuestro Newsletter y enterate de las últimas novedades y promociones!</p>
-                    <form id="checkoutForm" novalidate>
-                        <h2>Finalizar Pedido</h2>
-                        <label for="nombre">Nombre completo</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
-
-                        <label for="direccion">Dirección</label>
-                        <input type="text" id="direccion" name="direccion" placeholder="Dirección" required>
-
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email" required>
-
-                        <button type="submit">Enviar pedido por WhatsApp</button>
+                    <form id="myForm" class="mt-1" style="max-width:400px; padding-left:0;">
+                        <div class="input-group">
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   placeholder="tu@mail.com"
+                                   required
+                                   style="border-top-left-radius: .375rem; border-bottom-left-radius: .375rem;" />
+                            <button type="submit" class="btn btn-success" id="submitBtn">Enviar</button>
+                        </div>
                     </form>
-
                     <div id="message" class="mt-3"></div>
-
                     <p id="message"></p>
                 </div>
             </div>
@@ -265,6 +291,24 @@
         <button class="close-btn" aria-label="Cerrar popup">&times;</button>
     </div>
 
+    <!-- Modal reutilizable de UI (alert / confirm) -->
+    <div class="modal fade" id="uiModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="uiModalTitle">Aviso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body ms-3 me-3" id="uiModalBody"></div>
+                <div class="modal-footer border-0 gap-2">
+                    <button type="button" class="btn btn-outline-secondary" id="uiModalCancel" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="uiModalOk">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
     <script src="assets/vendor/aos/aos.js"></script>
@@ -272,231 +316,14 @@
     <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-    <script src="assets/js/main.js"></script>
-
-    <script src="assets/js/pdfjs/build/pdf.js"></script>
-    <!--<script>
-        document.getElementById('form-checkout').addEventListener('submit', function (e) {
-            e.preventDefault();
-            localStorage.removeItem('carrito');
-            window.location.href = 'gracias.html';
-        });
-    </script>-->
+    <!-- Config global para el webhook -->
     <script>
-        // ===================== Ajuste de layout (header) =====================
-        window.addEventListener('DOMContentLoaded', () => {
-            const header = document.getElementById('header');
-            const main = document.querySelector('.container-checkout');
-            if (header && main) {
-                main.style.paddingTop = (header.offsetHeight + 65) + 'px';
-            }
-        });
-
-        function toggleScrolled() {
-            const selectBody = document.querySelector('body');
-            const selectHeader = document.querySelector('#header');
-            if (!selectHeader.classList.contains('scroll-up-sticky')
-                && !selectHeader.classList.contains('sticky-top')
-                && !selectHeader.classList.contains('fixed-top')) return;
-            window.scrollY > 1 ? selectBody.classList.add('scrolled')
-                : selectBody.classList.remove('scrolled');
-        }
-        document.addEventListener('scroll', toggleScrolled);
-        window.addEventListener('load', toggleScrolled);
-
-        // ===================== Carrito & Resumen =====================
-        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-        function renderResumen() {
-            const lista = document.getElementById('listaResumen');
-            const total = document.getElementById('totalResumen');
-            if (!lista || !total) return;
-
-            lista.innerHTML = '';
-            let totalCompra = 0;
-
-            if (carrito.length === 0) {
-                lista.innerHTML = '<li>Tu carrito está vacío.</li>';
-                total.textContent = '0.00';
-                return;
-            }
-
-            carrito.forEach((prod, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-            <span class="nombre">${prod.nombre} (x${prod.cantidad})</span>
-            <div>
-              $${(prod.precio * prod.cantidad).toFixed(2)}
-              <button class="btn-eliminar" aria-label="Eliminar producto ${prod.nombre}" onclick="eliminarProducto(${index})">X</button>
-            </div>
-          `;
-                lista.appendChild(li);
-                totalCompra += prod.precio * prod.cantidad;
-            });
-
-            total.textContent = totalCompra.toFixed(2);
-        }
-
-        function eliminarProducto(index) {
-            carrito.splice(index, 1);
-            localStorage.setItem('carrito', JSON.stringify(carrito));
-            renderResumen();
-        }
-        window.eliminarProducto = eliminarProducto; // para el onclick del botón
-
-        function mostrarPopupExito() {
-            const popup = document.getElementById('popup-exito');
-            if (popup) popup.style.display = 'flex';
-        }
-        (function bindPopupClose() {
-            const popup = document.getElementById('popup-exito');
-            if (popup) {
-                const closeBtn = popup.querySelector('.close-btn');
-                if (closeBtn) closeBtn.addEventListener('click', () => popup.style.display = 'none');
-            }
-        })();
-
-        // ===================== Helpers para payload =====================
-        const WEBHOOK_URL = 'https://webhook-fcm.vercel.app/api/order'; // <-- cámbialo por tu endpoint
-
-        function horaToEpoch(hhmm) {
-            if (!hhmm) return null;
-            const [hh, mm] = hhmm.split(':').map(Number);
-            const d = new Date();
-            d.setHours(hh, mm, 0, 0);
-            return d.getTime();
-        }
-
-        function toArsString(n) {
-            return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(n);
-        }
-
-        function armarPayload({ nombre, direccion, email, telefono, horaProgramada }, carrito) {
-            const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
-            const now = Date.now();
-            return {
-                id: `W-${now}`,
-                customerName: nombre,
-                total: toArsString(total),
-                status: 'PENDING',
-                slotStart: horaToEpoch(horaProgramada),
-                slotEnd: null,
-                courier: null,
-                phone: telefono,
-                address: direccion,
-                email: email,
-                items: carrito.map(p => ({
-                    name: p.nombre,
-                    qty: p.cantidad,
-                    unitPrice: p.precio,
-                    subtotal: Number((p.precio * p.cantidad).toFixed(2))
-                })),
-                createdAt: now,
-                source: 'web'
-            };
-        }
-
-        // ===================== Formulario (WhatsApp + Enviar pedido) =====================
-        const form = document.querySelector('main #checkoutForm');
-        if (form) {
-            // Enviar por WhatsApp
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const nombre = this.nombre?.value.trim() || '';
-                const direccion = this.direccion?.value.trim() || '';
-                const telefono = this.telefono?.value.trim() || '';
-                const horaProgramada = this.horaProgramada?.value || '';
-                const email = this.email?.value.trim() || '';
-
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                const telRegex = /^[0-9]{8,15}$/;
-
-                if (!nombre) { alert('Por favor ingresa tu nombre completo.'); this.nombre.focus(); return; }
-                if (!direccion) { alert('Por favor ingresa tu dirección.'); this.direccion.focus(); return; }
-                if (!telRegex.test(telefono)) { alert('Teléfono inválido. Solo números, 8 a 15 dígitos.'); this.telefono.focus(); return; }
-                if (!emailRegex.test(email)) { alert('Por favor ingresa un email válido.'); this.email.focus(); return; }
-                if (carrito.length === 0) { alert('Tu carrito está vacío. Agrega productos antes de enviar el pedido.'); return; }
-
-                // Construir mensaje WhatsApp
-                let mensaje = `📦 *Pedido nuevo*%0A`;
-                mensaje += `👤 Nombre: ${nombre}%0A📍 Dirección: ${direccion}%0A📧 Email: ${email}%0A📱 Tel: ${telefono}%0A`;
-                if (horaProgramada) mensaje += `⏰ Hora programada: ${horaProgramada}%0A`;
-                mensaje += `%0A🛒 *Productos:*%0A`;
-
-                carrito.forEach(p => {
-                    mensaje += `• ${p.nombre} (x${p.cantidad}) - $${(p.precio * p.cantidad).toFixed(2)}%0A`;
-                });
-
-                const total = carrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
-                mensaje += `%0A💰 *Total:* $${total.toFixed(2)}`;
-
-                const telefonoDestino = '5493412282254'; // <-- tu WhatsApp receptor
-                window.open(`https://wa.me/${telefonoDestino}?text=${mensaje}`, '_blank');
-
-                // limpiar
-                localStorage.removeItem('carrito');
-                carrito = [];
-                renderResumen();
-                this.reset();
-                mostrarPopupExito();
-            });
-
-            // Enviar pedido (POST webhook) con confirmación
-            const btnEnviarPedido = document.getElementById('btnEnviarPedido');
-            if (btnEnviarPedido) {
-                btnEnviarPedido.addEventListener('click', async () => {
-                    const nombre = form.nombre?.value.trim() || '';
-                    const direccion = form.direccion?.value.trim() || '';
-                    const telefono = form.telefono?.value.trim() || '';
-                    const horaProgramada = form.horaProgramada?.value || '';
-                    const email = form.email?.value.trim() || '';
-
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    const telRegex = /^[0-9]{8,15}$/;
-
-                    if (!nombre) { alert('Por favor ingresa tu nombre completo.'); form.nombre.focus(); return; }
-                    if (!direccion) { alert('Por favor ingresa tu dirección.'); form.direccion.focus(); return; }
-                    if (!telRegex.test(telefono)) { alert('Teléfono inválido. Solo números, 8 a 15 dígitos.'); form.telefono.focus(); return; }
-                    if (!emailRegex.test(email)) { alert('Por favor ingresa un email válido.'); form.email.focus(); return; }
-                    if (carrito.length === 0) { alert('Tu carrito está vacío.'); return; }
-
-                    const ok = confirm(
-                        'Esta opción solo está disponible con pago en efectivo o transferencia confirmada.\n\n' +
-                        'Recibirás un mensaje de texto confirmando la transferencia recibida al número ingresado.\n\n' +
-                        '¿Deseás continuar?'
-                    );
-                    if (!ok) return;
-
-                    const payload = armarPayload({ nombre, direccion, email, telefono, horaProgramada }, carrito);
-
-                    try {
-                        const resp = await fetch(WEBHOOK_URL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        if (!resp.ok) {
-                            const txt = await resp.text().catch(() => '');
-                            throw new Error(`HTTP ${resp.status} ${txt}`);
-                        }
-
-                        localStorage.removeItem('carrito');
-                        carrito = [];
-                        renderResumen();
-                        form.reset();
-                        mostrarPopupExito();
-                    } catch (e) {
-                        console.error('Error enviando pedido:', e);
-                        alert('No pudimos enviar el pedido. Intenta nuevamente en unos minutos.');
-                    }
-                });
-            }
-        }
-
-        // Render inicial
-        renderResumen();
+        window.WEBHOOK_URL = 'https://webhook-fcm.vercel.app/api/order';
     </script>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/checkout.js"></script>
+    <script src="assets/js/pdfjs/build/pdf.js"></script>
 
 </body>
 
